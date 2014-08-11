@@ -28,8 +28,10 @@ done
 shift $((OPTIND-1))
 
 pingwindowname=$2
-currently_up=-1
 
+do_tmping()
+{
+currently_up=-1
 while [[ 1 ]]
 do
   ping -q -c 1 -w 1 $1 >/dev/null 2>&1
@@ -56,3 +58,9 @@ do
   fi
   sleep 1
 done
+}
+
+# This is a slight hack to get around a bug where tmux output cannot be
+# /dev/nulled.
+do_tmping $1 | grep -v "set option: window-status-bg"
+
