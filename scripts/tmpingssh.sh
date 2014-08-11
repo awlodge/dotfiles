@@ -12,6 +12,7 @@ ping -q -c 1 -w 1 $hostname >/dev/null
 if (( $? != 0 ))
 then
   ~/bin/tmping -b $hostname $hostname
+  echo Hit any key to begin ssh session...
   read
   tmux set-window-option -t "$hostname" window-status-bg default
 fi
