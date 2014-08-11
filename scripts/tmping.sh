@@ -5,16 +5,27 @@
 # the outcome.
 
 pingwindowname="ping $1"
+currently_up=-1
 
 while [[ 1 ]]
 do
-  ping -c 1 $1 >/dev/null 2>&1
+  ping -q -c 1 -w 1 $1 >/dev/null 2>&1
   rc=$?
   if (( $rc == 0 ))
   then
-    tmux set-window-option -t ":$pingwindowname" window-status-bg green >/dev/null 2>&1 
+    if (( $currently_up != 0 ))
+    then
+      echo $(date): ping $1 succeeded
+    fi
+    currently_up=0
+    tmux set-window-option -t ":$pingwindowname" window-status-bg green >/dev/null 2>&1
   else
+    if (( $currently_up != 1 ))
+    then
+      echo $(date): ping $1 failed
+    fi
     tmux set-window-option -t ":$pingwindowname" window-status-bg red >/dev/null 2>&1
+    currently_up=1
   fi
   sleep 1
 done
