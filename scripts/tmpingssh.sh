@@ -7,18 +7,26 @@
 hostname=$(echo $1 | cut -d @ -f 2)
 tmux rename-window "ping $hostname"
 
-while [[ 1 ]]
-do
-  ping -c 1 $hostname >/dev/null 2>&1
-  rc=$?
-  if (( $rc == 0 ))
-  then
-    tmux set-window-option -t ":ping $hostname" window-status-bg green >/dev/null 2>&1
-    break
-  else
-    tmux set-window-option -t ":ping $hostname" window-status-bg red >/dev/null 2>&1
-  fi
-  sleep 1
-done
-tmux rename-window $hostname
+# Do one ping, to check
+ping -q -c 1 -w 1 $hostname >/dev/null
+if (( $? != 0 ))
+then
+  while [[ 1 ]]
+  do
+    ping -q -c 1 -w 1 $hostname
+    rc=$?
+    if (( $rc == 0 ))
+    then
+      tmux set-window-option -t ":ping $hostname" window-status-bg green
+      read
+      tmux set-window-option -t ":ping $hostname" window-status-bg default
+      break
+    else
+      tmux set-window-option -t ":ping $hostname" window-status-bg red
+    fi
+    sleep 1
+  done
+fi
+
+tmux rename-window -t ":ping $hostname" "$hostname"
 ssh $1
