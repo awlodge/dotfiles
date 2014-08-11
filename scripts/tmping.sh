@@ -3,6 +3,18 @@
 #
 # Repeatedly ping the given host, updating the color of the tmux window with
 # the outcome.
+usage="Usage: $0 [-b] HOSTNAME WINDOWNAME"
+read -d '' helpstr <<- EOF
+
+$usage
+
+Repeatedly ping the given host HOSTNAME, updating the color of the tmux window WINDOWNAME with the outcome.
+
+Parameters:
+  -b Exit the script after the first successful ping is completed.
+  -h Display this help message.
+
+EOF
 
 break_on_success=1
 
@@ -19,7 +31,6 @@ do
       exit 0
       ;;
     \?)
-      echo "Invalid option: -$OPTARG" >&2
       echo $usage
       exit 1
       ;;
