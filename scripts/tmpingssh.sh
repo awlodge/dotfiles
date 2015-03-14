@@ -26,4 +26,10 @@ then
   exit $pingrc
 fi
 
-ssh $1
+which sshlog >/dev/null
+if (( $? == 0 ))
+then
+  sshlog $1
+else
+  ssh $1
+fi
