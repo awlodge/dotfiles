@@ -1,0 +1,2 @@
+new-window -dn python ipython
+new-window -dt 9 irssi
