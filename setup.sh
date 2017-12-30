@@ -44,5 +44,8 @@ backup_and_copy .bashrc
 backup_and_copy .tmux.conf
 backup_and_copy .gitconfig
 
+# Make ~/bin if it doesn't exist
+mkdir -p ~/bin
+
 # Softlink the scripts into ~/bin
 find scripts -name "*.sh" -exec bash -c 'softlink_to_bin "$@"' bash {} \;
