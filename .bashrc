@@ -122,3 +122,11 @@ green=$(tput setaf 2)
 clear_color=$(tput sgr 0)
 PS1='\u@\h \W\[${green}\]$(echo $(__git_ps1 "[%s]") | sed -e "s/\([*+#]\+\)/\[${red}\]\1\[${green}\]/")\[${clear_color}\] \$ '
 export PS1
+
+# enable bashrc.d
+if [ -d ~/.bashrc.d ]; then
+  for rc in ~/.bashrc.d/*; do
+    [ -f "$rc" ] || continue
+    . "$rc"
+  done
+fi
