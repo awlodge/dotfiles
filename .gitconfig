@@ -16,6 +16,7 @@
   lgg = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --graph
 	llg = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat --graph
 	ldg = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative --graph
+	ltg = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --graph
 	cp = cherry-pick
 	st = status -s
 	cl = clone
@@ -25,4 +26,5 @@
 	r = reset
 	r1 = reset HEAD^
 	r2 = reset HEAD^^
+	diffc = diff --cached
 
